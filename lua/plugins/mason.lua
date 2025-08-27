@@ -19,6 +19,9 @@ return {
       },
     })
 
-    require("mason-conform").setup()
+    require("mason-conform").setup({
+      ensure_installed = { "php-cs-fixer", "pretty-php", "shfmt", "stylua" },
+      automatic_installation = false, -- stops it from pulling in prettier automatically
+    })
   end,
 }

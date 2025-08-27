@@ -1,6 +1,7 @@
 -- lua/plugins/conform.lua
 return {
   "stevearc/conform.nvim",
+  dependencies = { "mason.nvim" },
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
   keys = {
@@ -29,9 +30,9 @@ return {
         -- json = { "prettier" },
         -- yaml = { "prettier" },
         -- markdown = { "prettier" },
-        
+
         -- PHP - Use PHP CS Fixer instead of prettier
-        php = { "php_cs_fixer" },
+        php = { "php_cs_fixer", "pretty-php" },
 
         -- Python
         -- python = { "black" },
@@ -54,6 +55,27 @@ return {
 
       -- Customize formatters
       formatters = {
+        prettier = {
+          condition = function(ctx)
+            local prettier_filetypes = {
+              "javascript",
+              "typescript",
+              "javascriptreact",
+              "typescriptreact",
+              "html",
+              "css",
+              "json",
+              "yaml",
+              "markdown",
+            }
+            -- 🚫 never use prettier on PHP
+            if ctx.filetype == "php" then
+              return false
+            end
+            return vim.tbl_contains(prettier_filetypes, ctx.filetype)
+          end,
+        },
+
         shfmt = {
           prepend_args = { "-i", "2" }, -- Use 2 spaces for indentation
         },
@@ -63,7 +85,7 @@ return {
           args = { "fix", "--rules=@PSR12", "$FILENAME" },
           stdin = false,
           env = {
-            PHP_CS_FIXER_IGNORE_ENV = "1"
+            PHP_CS_FIXER_IGNORE_ENV = "1",
           },
         },
       },
