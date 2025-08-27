@@ -33,6 +33,7 @@ return {
 
         -- PHP - Use PHP CS Fixer instead of prettier
         php = { "php_cs_fixer", "pretty-php" },
+        blade = { "blade-formatter" },
 
         -- Python
         -- python = { "black" },
