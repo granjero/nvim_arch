@@ -20,18 +20,21 @@ return {
         lua = { "stylua" },
 
         -- Web development
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescriptreact = { "prettier" },
-        html = { "prettier" },
-        css = { "prettier" },
-        json = { "prettier" },
-        yaml = { "prettier" },
-        markdown = { "prettier" },
+        -- javascript = { "prettier" },
+        -- typescript = { "prettier" },
+        -- javascriptreact = { "prettier" },
+        -- typescriptreact = { "prettier" },
+        -- html = { "prettier" },
+        -- css = { "prettier" },
+        -- json = { "prettier" },
+        -- yaml = { "prettier" },
+        -- markdown = { "prettier" },
+        
+        -- PHP - Use PHP CS Fixer instead of prettier
+        php = { "php_cs_fixer" },
 
         -- Python
-        python = { "black" },
+        -- python = { "black" },
 
         -- Shell
         sh = { "shfmt" },
@@ -53,6 +56,15 @@ return {
       formatters = {
         shfmt = {
           prepend_args = { "-i", "2" }, -- Use 2 spaces for indentation
+        },
+        -- Configure PHP CS Fixer
+        php_cs_fixer = {
+          command = "php-cs-fixer",
+          args = { "fix", "--rules=@PSR12", "$FILENAME" },
+          stdin = false,
+          env = {
+            PHP_CS_FIXER_IGNORE_ENV = "1"
+          },
         },
       },
     })

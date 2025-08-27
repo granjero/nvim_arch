@@ -3,6 +3,7 @@ return {
   "williamboman/mason.nvim",
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
+    "zapling/mason-conform.nvim",
   },
   cmd = "Mason",
   keys = { { "<leader>ma", "<cmd>Mason<cr>", desc = "Mason" } },
@@ -17,5 +18,7 @@ return {
         },
       },
     })
+
+    require("mason-conform").setup()
   end,
 }
