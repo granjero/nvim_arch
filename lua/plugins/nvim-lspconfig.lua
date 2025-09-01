@@ -44,7 +44,8 @@ return {
     end
 
     -- Servers list
-    local servers = { "lua_ls", "pyright", "clangd", "html", "cssls", "intelephense" }
+    local servers =
+      { "lua_ls", "pyright", "clangd", "html", "cssls", "intelephense", "tailwindcss", "emmet_language_server" }
 
     -- Setup servers
     for _, lsp in ipairs(servers) do
@@ -53,6 +54,13 @@ return {
         capabilities = capabilities,
       })
     end
+
+    -- HTML LSP with Blade support
+    lspconfig.html.setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "html", "blade" },
+    })
 
     -- Extra Lua LS settings
     lspconfig.lua_ls.setup({
@@ -64,6 +72,23 @@ return {
           workspace = { checkThirdParty = false },
           telemetry = { enable = false },
         },
+      },
+    })
+    -- Replace the generic setup for emmet_language_server with this:
+    lspconfig.emmet_language_server.setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = {
+        "html",
+        "css",
+        "scss",
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "vue",
+        "svelte",
+        "blade",
       },
     })
   end,
