@@ -44,8 +44,16 @@ return {
     end
 
     -- Servers list
-    local servers =
-      { "lua_ls", "pyright", "clangd", "html", "cssls", "intelephense", "tailwindcss", "emmet_language_server" }
+    local servers = {
+      "lua_ls",
+      "pyright",
+      "clangd",
+      "html",
+      "cssls",
+      "intelephense",
+      "tailwindcss",
+      "emmet_language_server",
+    }
 
     -- Setup servers
     for _, lsp in ipairs(servers) do
@@ -54,6 +62,23 @@ return {
         capabilities = capabilities,
       })
     end
+
+    -- Arduino Language Server requires special configuration
+    lspconfig.arduino_language_server.setup({
+      cmd = {
+        "arduino-language-server",
+        "-fqbn",
+        "arduino:avr:uno", -- Specify your board
+        "-cli",
+        "arduino-cli", -- Path to arduino-cli if not in PATH
+        "-clangd",
+        "clangd", -- Path to clangd if not in PATH
+      },
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "arduino", "ino" },
+      root_dir = lspconfig.util.root_pattern("arduino.json", "*.ino"),
+    })
 
     -- HTML LSP with Blade support
     lspconfig.html.setup({
