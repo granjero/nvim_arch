@@ -22,11 +22,21 @@ return {
     })
 
     -- Diagnostic signs
-    local signs = { Error = "E", Warn = "W", Hint = "H", Info = " " }
-    for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    end
+    -- local signs = { Error = "E", Warn = "W", Hint = "H", Info = " " }
+    -- for type, icon in pairs(signs) do
+    --   local hl = "DiagnosticSign" .. type
+    --   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    -- end
+    vim.diagnostic.config({
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = "E",
+          [vim.diagnostic.severity.WARN] = "W",
+          [vim.diagnostic.severity.HINT] = "H",
+          [vim.diagnostic.severity.INFO] = "",
+        },
+      },
+    })
 
     -- On attach function (keymaps, etc.)
     local on_attach = function(_, bufnr)
