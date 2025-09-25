@@ -9,13 +9,13 @@ return {
   },
   cmd = { "Laravel" },
   keys = {
-    {
-      "<leader>ll",
-      function()
-        Laravel.pickers.laravel()
-      end,
-      desc = "Laravel: Open Laravel Picker",
-    },
+    -- {
+    --   "<leader>ll",
+    --   function()
+    --     Laravel.pickers.laravel()
+    --   end,
+    --   desc = "Laravel: Open Laravel Picker",
+    -- },
     {
       "<c-g>",
       function()
