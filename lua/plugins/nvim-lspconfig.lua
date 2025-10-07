@@ -97,12 +97,6 @@ return {
       on_attach = on_attach,
       capabilities = capabilities,
       filetypes = { "arduino", "ino" },
-      root_dir = function(fname)
-        return vim.fs.dirname(vim.fs.find({ "arduino.json", "*.ino" }, {
-          upward = true,
-          path = vim.fs.dirname(fname),
-        })[1])
-      end,
     })
     vim.lsp.enable("arduino_language_server")
   end,
