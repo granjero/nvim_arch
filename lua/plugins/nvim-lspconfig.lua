@@ -57,7 +57,7 @@ return {
     vim.lsp.enable("html")
 
     -- emmet_language_server
-    lspconfig.lsp.config("emmet_language_server", {
+    vim.lsp.config("emmet_language_server", {
       on_attach = on_attach,
       capabilities = capabilities,
       filetypes = {
@@ -84,7 +84,7 @@ return {
     vim.lsp.enable("intelephense")
 
     -- Arduino Language Server requires special configuration
-    lspconfig.lsp.config("arduino_language_server", {
+    vim.lsp.config("arduino_language_server", {
       cmd = {
         "arduino-language-server",
         "-fqbn",
@@ -97,7 +97,12 @@ return {
       on_attach = on_attach,
       capabilities = capabilities,
       filetypes = { "arduino", "ino" },
-      root_dir = lspconfig.util.root_pattern("arduino.json", "*.ino"),
+      root_dir = function(fname)
+        return vim.fs.dirname(vim.fs.find({ "arduino.json", "*.ino" }, {
+          upward = true,
+          path = vim.fs.dirname(fname),
+        })[1])
+      end,
     })
     vim.lsp.enable("arduino_language_server")
   end,
