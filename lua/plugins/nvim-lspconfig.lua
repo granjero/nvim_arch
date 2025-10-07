@@ -7,8 +7,6 @@ return {
     "hrsh7th/cmp-nvim-lsp", -- Autocompletion
   },
   config = function()
-    local lspconfig = require("lspconfig")
-
     -- Capabilities for nvim-cmp
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -21,12 +19,6 @@ return {
       severity_sort = true,
     })
 
-    -- Diagnostic signs
-    -- local signs = { Error = "E", Warn = "W", Hint = "H", Info = " " }
-    -- for type, icon in pairs(signs) do
-    --   local hl = "DiagnosticSign" .. type
-    --   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    -- end
     vim.diagnostic.config({
       signs = {
         text = {
@@ -53,64 +45,19 @@ return {
       bufmap("n", "]d", vim.diagnostic.goto_next, "Next Diagnostic")
     end
 
-    -- Servers list
-    local servers = {
-      "lua_ls",
-      "pyright",
-      "clangd",
-      "html",
-      "cssls",
-      "intelephense",
-      "tailwindcss",
-      "emmet_language_server",
-    }
-
-    -- Setup servers
-    for _, lsp in ipairs(servers) do
-      lspconfig[lsp].setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-      })
-    end
-
-    -- Arduino Language Server requires special configuration
-    lspconfig.arduino_language_server.setup({
-      cmd = {
-        "arduino-language-server",
-        "-fqbn",
-        "arduino:avr:uno", -- Specify your board
-        "-cli",
-        "arduino-cli", -- Path to arduino-cli if not in PATH
-        "-clangd",
-        "clangd", -- Path to clangd if not in PATH
-      },
-      on_attach = on_attach,
-      capabilities = capabilities,
-      filetypes = { "arduino", "ino" },
-      root_dir = lspconfig.util.root_pattern("arduino.json", "*.ino"),
-    })
-
+    --
+    -- SERVERS
+    --
     -- HTML LSP with Blade support
-    lspconfig.html.setup({
+    vim.lsp.config("html", {
       on_attach = on_attach,
       capabilities = capabilities,
       filetypes = { "html", "blade" },
     })
+    vim.lsp.enable("html")
 
-    -- Extra Lua LS settings
-    lspconfig.lua_ls.setup({
-      on_attach = on_attach,
-      capabilities = capabilities,
-      settings = {
-        Lua = {
-          diagnostics = { globals = { "vim" } },
-          workspace = { checkThirdParty = false },
-          telemetry = { enable = false },
-        },
-      },
-    })
-    -- Replace the generic setup for emmet_language_server with this:
-    lspconfig.emmet_language_server.setup({
+    -- emmet_language_server
+    lspconfig.lsp.config("emmet_language_server", {
       on_attach = on_attach,
       capabilities = capabilities,
       filetypes = {
@@ -126,5 +73,32 @@ return {
         "blade",
       },
     })
+    vim.lsp.enable("emmet_language_server")
+
+    -- PHP intelephense
+    vim.lsp.config("intelephense", {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "php" },
+    })
+    vim.lsp.enable("intelephense")
+
+    -- Arduino Language Server requires special configuration
+    lspconfig.lsp.config("arduino_language_server", {
+      cmd = {
+        "arduino-language-server",
+        "-fqbn",
+        "arduino:avr:uno", -- Specify your board
+        "-cli",
+        "arduino-cli", -- Path to arduino-cli if not in PATH
+        "-clangd",
+        "clangd", -- Path to clangd if not in PATH
+      },
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "arduino", "ino" },
+      root_dir = lspconfig.util.root_pattern("arduino.json", "*.ino"),
+    })
+    vim.lsp.enable("arduino_language_server")
   end,
 }
