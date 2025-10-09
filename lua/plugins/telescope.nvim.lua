@@ -33,5 +33,28 @@ return {
     { "<leader>ss", "<cmd>Telescope git_status<cr>", desc = "Git status" },
     { "<leader>sw", "<cmd>Telescope grep_string<cr>", desc = "Find word under cursor" },
     { "<leader>sq", "<cmd>Telescope quickfix<cr>", desc = "Quickfix" },
+    {
+      "<leader>sA",
+      function()
+        require("telescope.builtin").find_files({
+          prompt_title = "Find All Files (including hidden & gitignored)",
+          hidden = true,
+          no_ignore = true,
+        })
+      end,
+      desc = "Find ALL files (hidden + gitignored)",
+    },
+    {
+      "<leader>sG",
+      function()
+        require("telescope.builtin").live_grep({
+          prompt_title = "Grep All Files (including hidden & gitignored)",
+          additional_args = function()
+            return { "--hidden", "--no-ignore" }
+          end,
+        })
+      end,
+      desc = "Grep ALL files (hidden + gitignored)",
+    },
   },
 }
