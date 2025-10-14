@@ -66,8 +66,6 @@ return {
         "scss",
         "javascript",
         "javascriptreact",
-        "typescript",
-        "typescriptreact",
         "vue",
         "svelte",
         "blade",
@@ -82,6 +80,14 @@ return {
       filetypes = { "php" },
     })
     vim.lsp.enable("intelephense")
+
+    -- TAILWINDCSS
+    vim.lsp.config("tailwindcss", {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "php", "blade", "html" },
+    })
+    vim.lsp.enable("tailwindcss")
 
     -- Arduino Language Server requires special configuration
     vim.lsp.config("arduino_language_server", {
