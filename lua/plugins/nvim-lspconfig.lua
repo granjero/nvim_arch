@@ -56,6 +56,14 @@ return {
     })
     vim.lsp.enable("html")
 
+    -- CSS LSP
+    vim.lsp.config("cssls", {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "css" },
+    })
+    vim.lsp.enable("cssls")
+
     -- emmet_language_server
     vim.lsp.config("emmet_language_server", {
       on_attach = on_attach,
@@ -105,5 +113,23 @@ return {
       filetypes = { "arduino", "ino" },
     })
     vim.lsp.enable("arduino_language_server")
+
+    --bash
+    vim.lsp.config("bashls", {
+      cmd = { "bash-language-server", "start" },
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "sh", "bash" },
+    })
+    vim.lsp.enable("bashls")
+
+    -- javascrip
+    vim.lsp.config("tsserver", {
+      cmd = { "typescript-language-server", "--stdio" },
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "php", "blade", "html" },
+    })
+    vim.lsp.enable("tsserver")
   end,
 }
