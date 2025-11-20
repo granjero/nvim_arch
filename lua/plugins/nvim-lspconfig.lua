@@ -114,6 +114,18 @@ return {
     })
     vim.lsp.enable("arduino_language_server")
 
+    -- Python
+    vim.lsp.config("pyright", {
+      cmd = {
+        "pyright-langserver",
+        "--stdio",
+      },
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "python" },
+    })
+    vim.lsp.enable("pyright")
+
     --bash
     vim.lsp.config("bashls", {
       cmd = { "bash-language-server", "start" },
