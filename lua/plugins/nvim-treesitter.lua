@@ -2,6 +2,7 @@ return {
   "nvim-treesitter/nvim-treesitter",
   dependencies = {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    "andymass/vim-matchup",
   },
   build = ":TSUpdate",
   branch = "master",
@@ -31,5 +32,6 @@ return {
         },
       },
     })
+    vim.treesitter.language.register("html", "blade")
   end,
 }
